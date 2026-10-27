@@ -1,6 +1,9 @@
 name: Compilar APK
 
-on: [push]
+on:
+  push:
+    paths:
+      - 'app/**'
 
 jobs:
   build:
