@@ -27,4 +27,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: QuestPlay-Servidor
-        path: dist/QuestPlay_pc_server.exe
+        path: dist/pc_server_codigo.exe
