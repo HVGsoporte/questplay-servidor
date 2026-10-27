@@ -1,9 +1,6 @@
 name: Compilar APK
 
-on:
-  push:
-    paths:
-      - 'app/**'
+on: [workflow_dispatch]
 
 jobs:
   build:
