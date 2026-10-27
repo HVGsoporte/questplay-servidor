@@ -1,0 +1,24 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+android {
+    namespace 'com.questplay.launcher'
+    compileSdk 33
+    defaultConfig {
+        applicationId "com.questplay.launcher"
+        minSdk 26
+        targetSdk 33
+        versionCode 1
+        versionName "4.0"
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+    }
+}
+dependencies {
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+}
