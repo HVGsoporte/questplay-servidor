@@ -1,6 +1,9 @@
 name: Compilar EXE
 
-on: [push]
+on:
+  push:
+    paths:
+      - 'servidor_pc_python.py'
 
 jobs:
   build:
