@@ -21,10 +21,10 @@ jobs:
         pip install pyinstaller
 
     - name: Compilar con PyInstaller
-      run: pyinstaller --onefile --icon=icono.ico pc_server_codigo.py
+      run: pyinstaller --onefile --icon=logo.ico pc_server_codigo.py
 
     - name: Subir ejecutable como artefacto
       uses: actions/upload-artifact@v4
       with:
         name: QuestPlay-Servidor
-        path: dist/pc_server_codigo.exe
+        path: dist/QuestPlay_pc_server.exe
