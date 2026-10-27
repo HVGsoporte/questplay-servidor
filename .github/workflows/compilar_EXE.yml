@@ -1,9 +1,6 @@
 name: Compilar EXE
 
-on:
-  push:
-    paths:
-      - 'servidor_pc_python.py'
+on: [workflow_dispatch]
 
 jobs:
   build:
