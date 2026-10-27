@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>QuestPlay Launcher v4</title>
+  <style>
+    body { background-color: #0f111a; color: #fff; font-family: sans-serif; padding: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+    .card { background: #1a1d28; padding: 10px; border-radius: 8px; text-align: center; cursor: pointer; position: relative; }
+    .card img { width: 100%; height: 120px; object-fit: contain; }
+    .hide-btn { position: absolute; top: 5px; right: 5px; background: red; color: white; border: none; cursor: pointer; }
+    .badge { position: absolute; top: 5px; left: 5px; background: #9d00ff; color: white; font-size: 10px; padding: 3px; }
+  </style>
+</head>
+<body>
+  <button onclick="addPcvr()">+ Añadir PCVR</button>
+  <div class="grid" id="grid"></div>
+  <script>
+    let hidden = JSON.parse(localStorage.getItem('hidden')) || [];
+    let pcvr = JSON.parse(localStorage.getItem('pcvr')) || [];
+    function render() {
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+      try {
+        const apps = JSON.parse(QuestBridge.getInstalledApps());
+        apps.forEach(app => {
+          if (!hidden.includes(app.package)) {
+            grid.innerHTML += `<div class="card" onclick="QuestBridge.launchStandalone('${app.package}')">
+              <button class="hide-btn" onclick="event.stopPropagation(); hide('${app.package}')">X</button>
+              <img src="${app.coverBase64}"><div>${app.title}</div></div>`;
+          }
+        });
+      } catch(e) {}
+      pcvr.forEach((game, i) => {
+        grid.innerHTML += `<div class="card" onclick="QuestBridge.launchPCVR('${game.exe}')">
+          <div class="badge">PCVR</div>
+          <button class="hide-btn" onclick="event.stopPropagation(); removePcvr(${i})">X</button>
+          <img src="https://via.placeholder.com/150?text=PCVR"><div>${game.title}</div></div>`;
+      });
+    }
+    function hide(pkg) { hidden.push(pkg); localStorage.setItem('hidden', JSON.stringify(hidden)); render(); }
+    function removePcvr(i) { pcvr.splice(i, 1); localStorage.setItem('pcvr', JSON.stringify(pcvr)); render(); }
+    function addPcvr() {
+      const title = prompt("Nombre del juego:");
+      const exe = prompt("Ruta al .exe (Ej: C:\\Juego.exe):");
+      if(title && exe) { pcvr.push({title, exe}); localStorage.setItem('pcvr', JSON.stringify(pcvr)); render(); }
+    }
+    setTimeout(render, 500);
+  </script>
+</body>
+</html>
